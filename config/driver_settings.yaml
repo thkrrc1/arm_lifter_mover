@@ -1,0 +1,63 @@
+usb_settings:
+   - 
+      port: /dev/aero_upper
+      baudrate: 1000000
+      mslist: [upper_ms]
+   - 
+      port: /dev/aero_lower
+      baudrate: 1000000
+      mslist: [lower_ms]
+
+converter_lib: seed_converter/ArmLifterMover
+
+ms_settings:
+   upper_ms:
+      msid: 1
+      joints:
+         - 
+           name: shoulder_y_joint
+           aero_idx: 0
+         - 
+           name: shoulder_p_joint
+           aero_idx: 1
+         - 
+           name: elbow_joint
+           aero_idx: 2
+         - 
+           name: wrist_y_joint
+           aero_idx: 3
+         - 
+           name: wrist_p_joint
+           aero_idx: 4
+         - 
+           name: wrist_r_joint
+           aero_idx: 5
+         - 
+           name: r_thumb_joint
+           aero_idx: 6
+
+   lower_ms:
+      msid: 2
+      joints:
+         - 
+           name: knee_joint
+           aero_idx: 1
+         - 
+           name: ankle_joint
+           aero_idx: 0
+         - 
+           name: wheel_front_left
+           aero_idx: 4
+           enc_range : [-13602,13602]
+         - 
+           name: wheel_front_right
+           aero_idx: 2
+           enc_range : [-13602,13602]
+         - 
+           name: wheel_rear_left
+           aero_idx: 5
+           enc_range : [-13602,13602]
+         - 
+           name: wheel_rear_right
+           aero_idx: 3
+           enc_range : [-13602,13602]

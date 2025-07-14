@@ -1,0 +1,70 @@
+<?xml version="1.0"?>
+<robot name="SEED-Arm-Lifter-Mover" xmlns:xacro="http://ros.org/wiki/xacro">
+
+    <xacro:arg name="driver_settings" default="$(find arm_lifter_mover)/config/driver_settings.yaml" />
+    <xacro:arg name="parts_dir" default="$(find arm_lifter_mover)/model/parts" />
+
+    <xacro:include filename="$(arg parts_dir)/typeg_lifter/typeg_lifter.xacro" />
+    <xacro:include filename="$(arg parts_dir)/typeg_mover/typeg_mover.xacro" />
+    <xacro:include filename="$(arg parts_dir)/trx_s/trx_s.xacro" />
+    <xacro:include filename="$(arg parts_dir)/typeg2_arm/typeg2_arm.xacro" />
+    
+    <xacro:property name="robot_root" value="base_link" />
+    <xacro:property name="lifter_bottom_link" value="lifter_bottom_link" />
+    <xacro:property name="lifter_top_link" value="lifter_top_link" />
+    <xacro:property name="mover_top_link" value="mover_top_link" />
+
+    <xacro:property name="arm_base_link" value="waist_link" />
+    <xacro:property name="arm_tip_link" value="wrist_p_link" />
+    <xacro:property name="rhand_base_link" value="r_hand_link" />
+
+    
+    <xacro:typeg-mover
+       base_link="${robot_root}"
+       top_link="${mover_top_link}"/>
+    
+    <joint
+       name="wheel_lifter_connector"
+       type="fixed">
+       <parent link="${mover_top_link}" />
+       <child link="${lifter_bottom_link}" />
+       <origin
+          xyz="0.0 0.0 0.0"
+          rpy="0 0 0 " />
+    </joint>
+    
+    <xacro:typeg-lifter
+       bottom_link="${lifter_bottom_link}"
+       top_link="${lifter_top_link}" />
+    
+    <joint
+       name="upper_lower_connector"
+       type="fixed">
+       <parent link="${lifter_top_link}" />
+       <child link="${arm_base_link}" />
+       <origin
+          xyz="0.0 0.0 0.0"
+          rpy="0 0 0 " />
+    </joint>
+
+    <xacro:typeg2-arm 
+        base_link="${arm_base_link}"
+        tip_link="${arm_tip_link}"/>
+
+    <joint 
+        name="r_wrist_to_hand_connector" 
+        type="fixed">
+        <parent link="${arm_tip_link}" />
+        <child link="${rhand_base_link}" />
+        <origin 
+            xyz="0 0 0.004" 
+            rpy="-3.141592 0 1.5707 " />
+    </joint>
+
+    <xacro:trx_s prefix="r" type="right" base_link="${rhand_base_link}"/>
+
+        
+    <xacro:include filename="$(find arm_lifter_mover)/model/arm_lifter_mover.ros2_control.xacro" />
+    <xacro:arm_lifter_mover_ros2_control name="arm_lifter_mover" driver_settings="$(arg driver_settings)" />
+
+</robot>

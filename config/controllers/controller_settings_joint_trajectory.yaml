@@ -1,0 +1,71 @@
+arm_controller:
+   ros__parameters:
+     type: joint_trajectory_controller/JointTrajectoryController
+     joints:
+       - shoulder_y_joint
+       - shoulder_p_joint
+       - elbow_joint
+       - wrist_y_joint
+       - wrist_p_joint
+       - wrist_r_joint
+
+     command_interfaces:
+       - position
+
+     state_interfaces:
+       - position
+
+     action_monitor_rate: 20.0
+     allow_partial_joints_goal: true
+     interpolate_from_desired_state: true
+     allow_integration_in_goal_trajectories: true
+     open_loop_control: true
+     stop_trajectory_duration: 0.4
+     constraints:
+       goal_time: 1.0
+       stopped_velocity_tolerance: 0.01
+
+hand_controller:
+   ros__parameters:
+     type: joint_trajectory_controller/JointTrajectoryController
+     joints:
+       - r_thumb_joint
+ 
+     command_interfaces:
+       - position
+     
+     state_interfaces:
+       - position
+     
+     action_monitor_rate: 20.0
+     allow_partial_joints_goal: true
+     interpolate_from_desired_state: true
+     allow_integration_in_goal_trajectories: true
+     open_loop_control: true
+     stop_trajectory_duration: 0.4
+     constraints:
+       goal_time: 1.0
+       stopped_velocity_tolerance: 0.01
+
+lifter_controller:
+   ros__parameters:
+     type: joint_trajectory_controller/JointTrajectoryController
+     joints:
+       - knee_joint
+       - ankle_joint
+
+     command_interfaces:
+       - position
+
+     state_interfaces:
+       - position
+
+     action_monitor_rate: 20.0
+     allow_partial_joints_goal: true
+     interpolate_from_desired_state: true
+     allow_integration_in_goal_trajectories: true
+     open_loop_control: true
+     stop_trajectory_duration: 0.4
+     constraints:
+       goal_time: 1.0
+       stopped_velocity_tolerance: 0.01
